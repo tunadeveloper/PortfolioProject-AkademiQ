@@ -5,13 +5,12 @@
 		<h2>Hakkımda</h2>
 		<div class="row">
 			<div class="col-sm-3">
-				<img src="images/man02.png" alt="man" class="img-responsive section-img">
+				<img src="@Model.ImageUrl" alt="man" class="img-responsive section-img">
 			</div> <!-- end .col-sm-3 -->
 			<div class="col-sm-9">
 				<h3 class="small-margin-bottom">@Model.NameSurname</h3>
 				<h5>@Model.Title</h5>
 				<p>@Model.Description</p>
-				<div class="signature"><img src="@Model.ImageUrl alt="signature" class="img-responsive"></div>
 				<ul class="list-unstyled text-uppercase">
 					<li><b>Telefon:</b> @Model.Phone</li>
 					<li><b>E-Posta:</b> @Model.Email</li>

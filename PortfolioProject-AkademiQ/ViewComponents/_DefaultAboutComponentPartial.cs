@@ -14,7 +14,7 @@ namespace PortfolioProject_AkademiQ.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var values = _context.Abouts.ToList();
+            var values = _context.Abouts.FirstOrDefault();
             return View(values);
         }
     }
