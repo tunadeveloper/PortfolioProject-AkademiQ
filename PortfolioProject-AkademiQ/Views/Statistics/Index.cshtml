@@ -1,0 +1,163 @@
+﻿@model List<Message>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-dark custom-scrollbar">
+    <header class="flex items-center justify-between px-8 py-6 sticky top-0 z-30 border-b border-white/5 bg-background-dark/95 backdrop-blur-md">
+        <div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Performans Özeti</h2>
+            <p class="text-text-muted text-sm mt-1">Sistem üzerindeki güncel mesaj ve yetenek verileri.</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="hidden md:flex h-10 px-4 rounded-full bg-card-dark border border-white/5 items-center justify-center text-sm font-medium text-text-light hover:bg-white/5 hover:border-accent-blue/30 transition-all gap-2 group">
+                <span class="material-symbols-outlined text-[18px] text-accent-blue group-hover:text-white transition-colors">calendar_today</span>
+                <span>@DateTime.Now.ToString("dd MMMM, yyyy")</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="p-8 space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach (var stat in new[] {
+                        new { Title = "Toplam Mesaj", Value = ViewBag.messagesCount.ToString(), Icon = "mail", Color = "text-accent-purple" },
+                        new { Title = "Bekleyen Mesaj", Value = ViewBag.messagesCountByIsReadFalse.ToString(), Icon = "emergency_home", Color = "text-red-400" },
+                        new { Title = "Yetenek Sayısı", Value = ViewBag.skillCount.ToString(), Icon = "terminal", Color = "text-accent-blue" },
+                        new { Title = "Başarı Oranı", Value = "%" + String.Format("{0:0}", ViewBag.skillAvgValue), Icon = "star", Color = "text-yellow-500" }
+                        })
+            {
+                <div class="bg-card-dark p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-all shadow-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="p-2 bg-white/5 rounded-lg @stat.Color">
+                            <span class="material-symbols-outlined">@stat.Icon</span>
+                        </div>
+                    </div>
+                    <p class="text-2xl font-bold text-white">@stat.Value</p>
+                    <p class="text-xs font-medium text-text-muted uppercase tracking-widest">@stat.Title</p>
+                </div>
+            }
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-card-dark p-8 rounded-2xl border border-white/5 shadow-2xl">
+                <h3 class="text-lg font-bold text-white mb-6">Mesaj Dağılımı</h3>
+                <div class="relative h-64">
+                    <canvas id="messageDonutChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-card-dark p-8 rounded-2xl border border-white/5 shadow-2xl">
+                <h3 class="text-lg font-bold text-white mb-6">İletişim Aktivitesi</h3>
+                <div class="relative h-64">
+                    <canvas id="messageBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-card-dark rounded-2xl border border-white/5 shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-white/5 bg-white/[0.01]">
+                <h3 class="text-lg font-bold text-white">Son Etkileşimler</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="text-[10px] text-gray-500 uppercase tracking-widest bg-black/20">
+                            <th class="px-8 py-4">Gönderen</th>
+                            <th class="px-8 py-4">Konu</th>
+                            <th class="px-8 py-4">Tarih</th>
+                            <th class="px-8 py-4">Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        @foreach (var item in Model)
+                        {
+                            <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                <td class="px-8 py-5 text-white font-medium">@item.SenderName</td>
+                                <td class="px-8 py-5 text-gray-400">@item.Subject</td>
+                                <td class="px-8 py-5 text-gray-500">@DateTime.Now.ToShortDateString()</td>
+                                <td class="px-8 py-5">
+                                    <span class="px-3 py-1 rounded-full text-[10px] @(item.IsRead == true ? "bg-green-500/10 text-green-400" : "bg-accent-blue/10 text-accent-blue animate-pulse")">
+                                        @(item.IsRead == true ? "Okundu" : "Yeni")
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const accentPurple = '#8b5cf6';
+        const accentBlue = '#3b82f6';
+        const gridColor = 'rgba(255, 255, 255, 0.05)';
+
+        const ctxDonut = document.getElementById('messageDonutChart').getContext('2d');
+        new Chart(ctxDonut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Okunmuş', 'Okunmamış'],
+                datasets: [{
+                    data: [@ViewBag.messagesCountByIsReadTrue, @ViewBag.messagesCountByIsReadFalse],
+                    backgroundColor: [accentPurple, accentBlue],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 20 } }
+                },
+                cutout: '75%'
+            }
+        });
+
+        const ctxBar = document.getElementById('messageBarChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+                datasets: [{
+                    label: 'Mesaj Sayısı',
+                    data: [2, 5, 3, 8, 4, 2, @ViewBag.messagesCountByIsReadFalse],
+                    backgroundColor: 'rgba(139, 92, 246, 0.5)',
+                    borderColor: accentPurple,
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { grid: { color: gridColor }, ticks: { color: '#64748b' } },
+                    x: { grid: { display: false }, ticks: { color: '#64748b' } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    });
+</script>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+    }
+</style>

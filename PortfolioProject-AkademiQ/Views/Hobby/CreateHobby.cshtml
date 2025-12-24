@@ -1,0 +1,129 @@
+﻿@model Hobby
+@{
+    ViewData["Title"] = "Yeni Hobi Ekle";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-dark">
+    <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent-purple/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <header class="flex items-center justify-between px-8 py-6 z-10 border-b border-white/5 bg-background-dark/80 backdrop-blur-md">
+        <div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Yeni Hobi Ekle</h2>
+            <p class="text-text-muted text-sm mt-1">İlgi alanlarınızı simgeleyen bir başlık ve ikon seçin.</p>
+        </div>
+        <a href="/Hobby/Index" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all text-sm font-medium border border-white/5">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Listeye Dön
+        </a>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-8 flex items-center justify-center relative z-0">
+        <div class="w-full max-w-4xl">
+
+            <form method="post" class="bg-card-dark rounded-2xl border border-white/5 shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 relative group">
+
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-purple to-accent-blue opacity-50"></div>
+
+                <div class="p-8 space-y-6">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="size-10 rounded-lg bg-accent-purple/10 flex items-center justify-center text-accent-purple">
+                            <span class="material-symbols-outlined">edit_square</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Hobi Detayları</h3>
+                    </div>
+
+                    <div class="group/input">
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Hobi Adı</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-3.5 text-gray-500 group-focus-within/input:text-white transition-colors">sports_esports</span>
+                            <input type="text" required asp-for="Title" id="titleInput" class="w-full bg-background-darker border border-white/10 text-white text-sm rounded-xl block pl-12 p-3.5 focus:border-accent-purple focus:ring-1 focus:ring-accent-purple outline-none transition-all placeholder:text-gray-600" placeholder="Örn: Fotoğrafçılık">
+                        </div>
+                       
+                    </div>
+
+                    <div class="group/input">
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">İkon Bağlantısı (URL)</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-3.5 text-gray-500 group-focus-within/input:text-accent-blue transition-colors">link</span>
+                            <input type="text" required asp-for="IconUrl" id="iconUrlInput" class="w-full bg-background-darker border border-white/10 text-white text-sm rounded-xl block pl-12 p-3.5 focus:border-accent-blue focus:ring-1 focus:ring-accent-blue outline-none transition-all placeholder:text-gray-600" placeholder="https://... (PNG/SVG)">
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-2 pl-1">* Flaticon veya benzeri sitelerden ikon linki yapıştırın.</p>
+                       
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-accent hover:opacity-90 text-white font-bold text-sm transition-all shadow-lg shadow-accent-purple/20 active:scale-95">
+                            <span class="material-symbols-outlined">save</span>
+                            Hobiyi Kaydet
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-8 bg-white/[0.02] border-l border-white/5 flex flex-col items-center justify-center relative overflow-hidden">
+
+                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+                    <span class="text-xs font-bold text-accent-blue uppercase tracking-widest mb-8 z-10">Canlı Önizleme</span>
+
+                    <div class="relative bg-card-dark rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-center gap-4 w-48 shadow-2xl z-10 transition-transform duration-300 hover:-translate-y-2">
+
+                        <div class="relative size-20 rounded-full bg-gradient-to-br from-white/5 to-white/[0.01] border border-white/10 flex items-center justify-center overflow-hidden shadow-inner">
+                            <img id="iconPreview" src="" class="w-10 h-10 object-contain hidden" alt="Preview" />
+
+                            <span id="iconPlaceholder" class="material-symbols-outlined text-4xl text-gray-600 animate-pulse">image</span>
+                        </div>
+
+                        <h3 id="titlePreview" class="text-sm font-bold text-gray-300 text-center w-full px-2 truncate">
+                            Hobi Başlığı
+                        </h3>
+
+                        <div class="absolute top-2 right-2 flex gap-1 opacity-30">
+                            <div class="size-2 rounded-full bg-gray-600"></div>
+                            <div class="size-2 rounded-full bg-gray-600"></div>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-500 text-xs mt-8 text-center max-w-[200px] z-10">
+                        Liste sayfasında hobiniz bu şekilde görünecektir.
+                    </p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>
+
+<script>
+    const titleInput = document.getElementById('titleInput');
+    const iconInput = document.getElementById('iconUrlInput');
+
+    const titlePreview = document.getElementById('titlePreview');
+    const iconPreview = document.getElementById('iconPreview');
+    const iconPlaceholder = document.getElementById('iconPlaceholder');
+
+    titleInput.addEventListener('input', function(e) {
+        const val = e.target.value.trim();
+        titlePreview.textContent = val ? val : "Hobi Başlığı";
+        if(val.length > 15) titlePreview.classList.add('text-accent-blue');
+        else titlePreview.classList.remove('text-accent-blue');
+    });
+
+    iconInput.addEventListener('input', function(e) {
+        const url = e.target.value.trim();
+
+        if (url) {
+            iconPreview.src = url;
+            iconPreview.classList.remove('hidden');
+            iconPlaceholder.classList.add('hidden');
+
+            iconPreview.onerror = function() {
+                iconPreview.classList.add('hidden');
+                iconPlaceholder.classList.remove('hidden');
+            };
+        } else {
+            iconPreview.classList.add('hidden');
+            iconPlaceholder.classList.remove('hidden');
+        }
+    });
+</script>

@@ -1,0 +1,305 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<Message>
+
+@{
+    ViewData["Title"] = "Gelen Kutusu";
+    Layout = "~/Views/Admin/Index.cshtml";
+    var totalCount = Model.TotalItemCount;
+}
+
+<main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-dark">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <header class="flex items-center justify-between px-8 py-6 z-10 border-b border-white/5 bg-background-dark/80 backdrop-blur-md">
+        <div class="flex items-center gap-4">
+            <div class="size-12 rounded-2xl bg-gradient-to-br from-accent-purple to-accent-blue flex items-center justify-center shadow-lg shadow-accent-purple/20">
+                <span class="material-symbols-outlined text-white text-2xl">mail</span>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-white tracking-tight">Gelen Kutusu</h2>
+                <p class="text-text-muted text-sm mt-0.5">
+                    Toplam <span class="text-white font-semibold">@totalCount</span> mesajınız var.
+                    <span class="text-gray-500">(Sayfa @Model.PageNumber / @Model.PageCount)</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button class="hidden md:flex h-10 px-4 rounded-full bg-card-dark border border-white/5 items-center justify-center text-sm font-medium text-text-light hover:bg-white/5 hover:border-accent-blue/30 transition-all gap-2 group">
+                <span class="material-symbols-outlined text-[18px] text-accent-blue group-hover:text-white transition-colors">calendar_today</span>
+                <span>@DateTime.Now.ToString("dd MMMM, yyyy")</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth relative z-0 flex flex-col">
+        <div class="max-w-6xl mx-auto w-full flex-1 flex flex-col">
+
+            <div class="bg-card-dark rounded-2xl border border-white/5 shadow-2xl overflow-hidden flex-1 flex flex-col min-h-[500px]">
+
+                <div class="grid grid-cols-12 gap-4 px-6 py-3 bg-white/[0.02] border-b border-white/5 text-[11px] text-gray-500 uppercase tracking-widest font-semibold shrink-0">
+                    <div class="col-span-12 md:col-span-3">Gönderen</div>
+                    <div class="col-span-12 md:col-span-6">Konu & İçerik</div>
+                    <div class="col-span-6 md:col-span-2 text-right md:text-left">Tarih</div>
+                    <div class="col-span-6 md:col-span-1 text-right">İşlem</div>
+                </div>
+
+                <div class="flex-1 overflow-y-auto">
+                    @if (Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            var isUnread = item.IsRead == false;
+                            var rowClass = isUnread ? "bg-accent-blue/[0.03] hover:bg-accent-blue/[0.06]" : "hover:bg-white/[0.02]";
+                            var textClass = isUnread ? "text-white font-bold" : "text-gray-300 font-normal";
+
+                            <div class="group grid grid-cols-12 gap-4 px-6 py-4 border-b border-white/5 items-center transition-all cursor-pointer @rowClass">
+
+                                <div class="col-span-12 md:col-span-3 flex items-center gap-3">
+                                    <div class="relative shrink-0">
+                                        <div class="size-10 rounded-full bg-gradient-to-tr from-gray-800 to-gray-700 border border-white/10 flex items-center justify-center text-sm font-bold text-white shadow-inner">
+                                            @(item.SenderName?.Substring(0, 1).ToUpper() ?? "?")
+                                        </div>
+                                        @if (isUnread)
+                                        {
+                                            <div class="absolute -top-0.5 -right-0.5 size-3 bg-accent-blue rounded-full border-2 border-card-dark"></div>
+                                        }
+                                    </div>
+                                    <div class="overflow-hidden">
+                                        <p class="text-sm truncate @textClass">@item.SenderName</p>
+                                        <p class="text-xs text-gray-500 truncate">@item.SenderEmail</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-span-12 md:col-span-6">
+                                    <div class="flex flex-col md:block">
+                                        <span class="text-sm @textClass mr-2">@item.Subject</span>
+                                        <span class="text-sm text-gray-500 truncate block md:inline border-l md:border-none border-white/10 pl-2 md:pl-0 mt-1 md:mt-0">
+                                            - @(item.MessageText?.Length > 50 ? item.MessageText.Substring(0, 50) + "..." : item.MessageText)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-span-6 md:col-span-2 text-right md:text-left">
+                                    <span class="text-xs text-gray-400 font-medium whitespace-nowrap">
+                                        @(((DateTime)item.SendDate).ToString("dd MMM yyyy, HH:mm"))
+                                    </span>
+                                </div>
+
+                                <div class="col-span-6 md:col-span-1 flex justify-end gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button type="button" onclick="openMessageModal(@item.MessageId)" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors" title="Detay">
+                                        <span class="material-symbols-outlined text-lg">visibility</span>
+                                    </button>
+                                    <a href="/Message/DeleteMessage/@item.MessageId" class="p-2 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-colors" title="Sil"> <span class="material-symbols-outlined text-lg">delete</span></a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="flex flex-col items-center justify-center h-full text-center py-20">
+                            <div class="size-20 rounded-full bg-white/5 flex items-center justify-center text-gray-600 mb-4">
+                                <span class="material-symbols-outlined text-4xl">inbox</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white">Gelen Kutusu Boş</h3>
+                            <p class="text-gray-500 text-sm mt-2">Şu an görüntülenecek yeni mesajınız bulunmuyor.</p>
+                        </div>
+                    }
+                </div>
+
+                @if (Model.PageCount > 1)
+                {
+                    <div class="px-6 py-4 border-t border-white/5 bg-black/20 flex items-center justify-between shrink-0">
+                        <p class="text-xs text-gray-500 hidden sm:block">
+                            Toplam @totalCount kayıttan @Model.FirstItemOnPage - @Model.LastItemOnPage arası gösteriliyor.
+                        </p>
+
+                        <div class="flex gap-2 items-center mx-auto sm:mx-0">
+                            @if (Model.HasPreviousPage)
+                            {
+                                <a href="/Message/Index?page=@(Model.PageNumber - 1)" class="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all flex items-center">
+                                    <span class="material-symbols-outlined text-lg">chevron_left</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="p-2 rounded-lg bg-white/[0.02] border border-white/5 text-gray-700 cursor-not-allowed flex items-center">
+                                    <span class="material-symbols-outlined text-lg">chevron_left</span>
+                                </span>
+                            }
+
+                            <div class="flex gap-1 overflow-x-auto max-w-[200px] no-scrollbar">
+                                @for (int i = 1; i <= Model.PageCount; i++)
+                                {
+                                    if (i == Model.PageNumber)
+                                    {
+                                        <span class="min-w-[32px] h-8 flex items-center justify-center rounded-lg bg-accent-blue text-white text-xs font-bold shadow-[0_0_10px_rgba(59,130,246,0.5)]">
+                                            @i
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Message/Index?page=@i" class="min-w-[32px] h-8 flex items-center justify-center rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all text-xs">
+                                            @i
+                                        </a>
+                                    }
+                                }
+                            </div>
+
+                            @if (Model.HasNextPage)
+                            {
+                                <a href="/Message/Index?page=@(Model.PageNumber + 1)" class="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all flex items-center">
+                                    <span class="material-symbols-outlined text-lg">chevron_right</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="p-2 rounded-lg bg-white/[0.02] border border-white/5 text-gray-700 cursor-not-allowed flex items-center">
+                                    <span class="material-symbols-outlined text-lg">chevron_right</span>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="messageModal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0" id="modalBackdrop"></div>
+
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+
+            <div class="relative transform overflow-hidden rounded-2xl bg-[#16181d] border border-white/10 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95 flex flex-col max-h-[85vh]" id="modalPanel">
+
+                <div id="modalLoading" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#16181d]">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-accent-blue mb-4"></div>
+                    <p class="text-gray-500 text-sm">Mesaj içeriği getiriliyor...</p>
+                </div>
+
+                <div class="flex items-center justify-between p-6 border-b border-white/5 bg-white/[0.02]">
+                    <div class="flex items-center gap-4">
+                        <div class="size-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 border border-white/10 flex items-center justify-center text-lg font-bold text-white shadow-lg">
+                            <span id="mdlAvatar">?</span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-white leading-tight" id="mdlSenderName">...</h3>
+                            <p class="text-sm text-accent-blue" id="mdlSenderEmail">...</p>
+                        </div>
+                    </div>
+
+                    <div class="text-right mr-8">
+                        <div class="text-sm font-medium text-white" id="mdlDate">...</div>
+                        <div class="text-xs text-gray-500" id="mdlTime">...</div>
+                    </div>
+
+                    <button onclick="closeModal()" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-2xl">close</span>
+                    </button>
+                </div>
+
+                <div class="p-8 overflow-y-auto custom-scrollbar">
+                    <h2 class="text-xl font-bold text-white mb-6" id="mdlSubject">...</h2>
+                    <div class="prose prose-invert prose-sm max-w-none">
+                        <p class="text-gray-300 leading-relaxed whitespace-pre-wrap font-light" id="mdlMessageText">...</p>
+                    </div>
+                </div>
+
+                <div class="p-6 border-t border-white/5 bg-black/20 flex justify-between items-center mt-auto shrink-0">
+                    <div class="flex gap-3">
+                        <button onclick="closeModal()" class="flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-accent-blue hover:bg-blue-600 text-white text-sm font-medium transition-all shadow-lg shadow-blue-500/20">
+                            <span class="material-symbols-outlined text-lg">check</span> Tamam / Kapat
+                        </button>
+                        <a id="btnDelete" href="#" onclick="return confirm('Silmek istediğinize emin misiniz?')" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-red-500/10 hover:text-red-400 text-gray-400 text-sm font-medium transition-all border border-white/5">
+                            <span class="material-symbols-outlined text-lg">delete</span> Sil
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    const modal = document.getElementById('messageModal');
+    const backdrop = document.getElementById('modalBackdrop');
+    const panel = document.getElementById('modalPanel');
+    const loadingScreen = document.getElementById('modalLoading');
+    function openMessageModal(id) {
+        modal.classList.remove('hidden');
+        loadingScreen.classList.remove('hidden');
+
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            panel.classList.remove('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+        }, 10);
+        $.ajax({
+            url: '/Message/GetMessageDetails/' + id,
+            type: 'GET',
+            success: function(data) {
+                $('#mdlSenderName').text(data.senderName);
+                $('#mdlSenderEmail').text(data.senderEmail);
+                $('#mdlSubject').text(data.subject);
+                $('#mdlMessageText').text(data.messageText);
+                $('#mdlDate').text(data.sendDate);
+                $('#mdlTime').text(data.sendTime);
+
+                var initial = data.senderName ? data.senderName.charAt(0).toUpperCase() : "?";
+                $('#mdlAvatar').text(initial);
+
+                $('#btnDelete').attr('href', '/Message/DeleteMessage/' + data.messageId);
+
+                loadingScreen.classList.add('hidden');
+
+                markRowAsRead(id);
+            },
+            error: function() {
+                alert("Mesaj yüklenirken bir hata oluştu.");
+                closeModal();
+            }
+        });
+    }
+
+    function closeModal() {
+        backdrop.classList.add('opacity-0');
+        panel.classList.add('opacity-0', 'translate-y-4', 'sm:translate-y-0', 'sm:scale-95');
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+    function markRowAsRead(id) {
+        const row = document.getElementById('row-' + id);
+        if(row) {
+            row.classList.remove('bg-accent-blue/[0.05]');
+
+            $(row).find('.sender-text').removeClass('text-white font-bold').addClass('text-gray-400');
+            $(row).find('.subject-text').removeClass('text-white font-medium').addClass('text-gray-400');
+            $(row).find('.unread-dot').remove();
+        }
+    }
+    backdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape" && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+</script>
+
+<script>
+    function deleteMessage(id) {
+        if(confirm('Bu mesajı kalıcı olarak silmek istiyor musunuz?')) {
+            window.location.href = '/Message/Delete/' + id;
+        }
+    }
+</script>

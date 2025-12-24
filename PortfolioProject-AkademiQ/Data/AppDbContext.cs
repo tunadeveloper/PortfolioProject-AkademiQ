@@ -77,8 +77,6 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Hobby>(entity =>
         {
-            entity.HasNoKey();
-
             entity.Property(e => e.IconUrl).HasMaxLength(200);
             entity.Property(e => e.Title).HasMaxLength(50);
         });

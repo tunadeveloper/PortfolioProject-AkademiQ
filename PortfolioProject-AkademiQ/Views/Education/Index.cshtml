@@ -1,0 +1,70 @@
+﻿@model List<Education>
+@{
+    ViewData["Title"] = "Eğitim Bilgileri";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-dark">
+    <div class="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <header class="flex items-center justify-between px-8 py-6 z-10 border-b border-white/5 bg-background-dark/80 backdrop-blur-md">
+        <div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Eğitim Hayatım</h2>
+            <p class="text-text-muted text-sm mt-1">Akademik geçmişinizi buradan yönetebilirsiniz.</p>
+        </div>
+        <a href="/Education/CreateEducation" class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-accent hover:opacity-90 text-white font-bold text-sm transition-all shadow-lg shadow-accent-purple/20 active:scale-95">
+            <span class="material-symbols-outlined text-[20px]">add_circle</span>
+            Yeni Eğitim Ekle
+        </a>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-8 pt-6 pb-20 scroll-smooth relative z-0">
+        <div class="max-w-6xl mx-auto space-y-10">
+            <div class="bg-card-dark rounded-2xl border border-white/5 shadow-2xl overflow-hidden">
+                <div class="p-6 border-b border-white/5 bg-white/[0.01] flex items-center gap-3">
+                    <span class="material-symbols-outlined text-accent-blue">list_alt</span>
+                    <h3 class="text-lg font-bold text-white">Eğitim Listesi</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[11px] text-gray-500 uppercase tracking-widest bg-black/20">
+                                <th class="px-8 py-4">Kurum / Okul Adı</th>
+                                <th class="px-8 py-4">Bölüm</th>
+                                <th class="px-8 py-4">Tarih Aralığı</th>
+                                <th class="px-8 py-4 text-right">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            @foreach (var item in Model)
+                            {
+                                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-all group">
+                                    <td class="px-8 py-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="size-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple group-hover:bg-accent-purple group-hover:text-white transition-all">
+                                                <span class="material-symbols-outlined text-xl">history_edu</span>
+                                            </div>
+                                            <span class="text-white font-semibold">@item.Title</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-5 text-gray-400">@item.Department</td>
+                                    <td class="px-8 py-5">
+                                            @item.EducationDate
+                                    </td>
+                                    <td class="px-8 py-5 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <a href="/Education/UpdateEducation/@item.EducationId" class="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-accent-blue hover:bg-accent-blue/10 transition-all">
+                                                <span class="material-symbols-outlined text-lg">edit</span>
+                                            </a>
+                                            <a href="/Education/DeleteEducation/@item.EducationId" class="p-2 rounded-lg bg-white/5 text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all"><span class="material-symbols-outlined text-lg">delete</span></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
