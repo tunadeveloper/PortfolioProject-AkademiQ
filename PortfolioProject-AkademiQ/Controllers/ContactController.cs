@@ -31,7 +31,7 @@ namespace PortfolioProject_AkademiQ.Controllers
                 values.MapLocation = contact.MapLocation;
                 values.WebSite = contact.WebSite;
                 _context.SaveChanges();
-                TempData["Update"] = "Bilgiler başarıyla güncellendis!";
+                TempData["Update"] = "Bilgiler başarıyla güncellendi!";
                 return Redirect("/Contact/UpdateContact/1");
             }
             return View(contact);
