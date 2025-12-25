@@ -158,3 +158,19 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const value = '@TempData["Update"]';
+        if (value) {
+            Swal.fire({
+                title: value,
+                icon: 'success',
+                confirmButtonText: 'Tamam',
+                background: '#151022',
+                color: '#ffffff',
+                confirmButtonColor: '#5b2bee'
+            });
+        }
+    });
+</script>

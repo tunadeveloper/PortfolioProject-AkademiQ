@@ -21,10 +21,15 @@ namespace PortfolioProject_AkademiQ.Controllers
 
         public IActionResult DeleteWork(int id)
         {
-            var values = _context.Works.Find(id);
-            _context.Works.Remove(values);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Works.Find(id);
+                _context.Works.Remove(values);
+                _context.SaveChanges();
+                TempData["Delete"] = "Çalışma başarıyla silindi!";
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         public IActionResult CreateWork() => View();

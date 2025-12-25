@@ -1,0 +1,119 @@
+﻿@model List<PortfolioProject_AkademiQ.Entities.Reference>
+@{
+    ViewData["Title"] = "Referanslar";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-dark">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-blue/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <header class="flex items-center justify-between px-8 py-6 z-10 border-b border-white/5 bg-background-dark/80 backdrop-blur-md">
+        <div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Referanslar</h2>
+            <p class="text-text-muted text-sm mt-1">İş arkadaşlarınız ve müşterilerinizden gelen geri bildirimler.</p>
+        </div>
+        @if(Model.Count >= 3)
+        {
+            <button class="hidden md:flex h-10 px-4 rounded-full bg-card-dark border border-white/5 items-center justify-center text-sm font-medium text-text-light hover:bg-white/5 hover:border-accent-blue/30 transition-all gap-2 group">
+                <span class="material-symbols-outlined text-[18px] text-accent-blue group-hover:text-white transition-colors">calendar_today</span>
+                <span>@DateTime.Now.ToString("dd MMMM, yyyy")</span>
+            </button>
+        }else{
+        <a href="/Reference/CreateReference/" class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-accent hover:opacity-90 text-white font-bold text-sm transition-all shadow-lg shadow-accent-purple/20 active:scale-95">
+            <span class="material-symbols-outlined text-[20px]">person_add</span>
+            Yeni Referans Ekle
+        </a>
+        }
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-8 pt-6 pb-20 scroll-smooth relative z-0">
+        <div class="max-w-7xl mx-auto">
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    @foreach (var item in Model.OrderByDescending(x => x.ReferenceId))
+                    {
+                        <div class="group relative bg-card-dark rounded-2xl border border-white/5 p-6 flex flex-col hover:border-accent-purple/30 transition-all duration-300 shadow-lg hover:shadow-accent-purple/10">
+
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="relative size-12 rounded-full p-[2px] bg-gradient-to-br from-white/10 to-transparent">
+                                        <img src="@item.ImageUrl" alt="@item.NameSurname" class="size-full rounded-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=@(item.NameSurname ?? "User")&background=random';" />
+                                    </div>
+
+                                    <div>
+                                        <h3 class="text-base font-bold text-white leading-tight">@item.NameSurname</h3>
+                                        <p class="text-xs text-accent-blue font-medium mt-0.5">@item.Title</p>
+                                    </div>
+                                </div>
+
+                                @if (!string.IsNullOrEmpty(item.LinkedInUrl))
+                                {
+                                    <a href="@item.LinkedInUrl" target="_blank" class="size-8 rounded-lg bg-[#0077b5]/10 text-[#0077b5] flex items-center justify-center hover:bg-[#0077b5] hover:text-white transition-all border border-[#0077b5]/20" title="LinkedIn Profili">
+                                        <span class="material-symbols-outlined text-[18px]">captive_portal</span>
+                                    </a>
+                                }
+                            </div>
+
+                            <div class="relative flex-1 bg-white/[0.02] rounded-xl p-4 mb-4 border border-white/5 group-hover:bg-white/[0.04] transition-colors">
+                                <span class="material-symbols-outlined absolute top-2 right-2 text-4xl text-white/[0.03] select-none pointer-events-none">format_quote</span>
+
+                                <p class="text-sm text-gray-400 italic leading-relaxed line-clamp-4 relative z-10">
+                                    "@item.Comment"
+                                </p>
+                            </div>
+
+                            <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
+                                <span class="text-[10px] text-gray-600 font-mono">ID: @item.ReferenceId</span>
+
+                                <div class="flex items-center gap-2">
+                                    <a href="/Reference/UpdateReference/@item.ReferenceId" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all text-xs font-medium border border-white/5">
+                                        <span class="material-symbols-outlined text-[16px]">edit</span>
+                                        Düzenle
+                                    </a>
+                                    <a href="/Reference/DeleteReference/@item.ReferenceId" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all text-xs font-medium border border-red-500/10">
+                                        <span class="material-symbols-outlined text-[16px]">delete</span>
+                                        Sil
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="flex flex-col items-center justify-center h-96 border-2 border-dashed border-white/5 rounded-3xl bg-white/[0.01]">
+                    <div class="size-20 rounded-full bg-white/5 flex items-center justify-center text-gray-600 mb-6">
+                        <span class="material-symbols-outlined text-4xl">reviews</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Henüz Referans Yok</h3>
+                    <p class="text-gray-500 mt-2 max-w-sm text-center">Profilinizi güçlendirmek için ilk referansı ekleyin.</p>
+                    <a href="/Reference/Create" class="mt-6 px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white font-medium transition-all border border-white/5">
+                        Referans Ekle
+                    </a>
+                </div>
+            }
+
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const value = '@TempData["Delete"]';
+        if (value) {
+            Swal.fire({
+                title: value,
+                icon: 'success',
+                confirmButtonText: 'Tamam',
+                background: '#151022',
+                color: '#ffffff',
+                confirmButtonColor: '#5b2bee'
+            });
+        }
+    });
+</script>

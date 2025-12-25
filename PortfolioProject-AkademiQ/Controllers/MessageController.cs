@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PortfolioProject_AkademiQ.Data;
+using PortfolioProject_AkademiQ.Entities;
 using X.PagedList;
 using X.PagedList.Extensions;
 
@@ -53,10 +55,32 @@ namespace PortfolioProject_AkademiQ.Controllers
 
         public IActionResult DeleteMessage(int id)
         {
-            var values = _context.Messages.Find(id);
-            _context.Messages.Remove(values);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Messages.Find(id);
+                _context.Messages.Remove(values);
+                _context.SaveChanges();
+                TempData["Delete"] = "Mesaj başarıyla silindi!";
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateMessage(Message message)
+        {
+            if (ModelState.IsValid)
+            {
+                message.SendDate = DateTime.Now;
+                message.IsRead = false;
+                _context.Messages.Add(message);
+                _context.SaveChanges();
+
+                TempData["MessageSent"] = "Mesaj başarıyla gönderildi!";
+                return RedirectToAction("Index", "Default");
+            }
+
+            return View(message);
         }
     }
 }

@@ -3,18 +3,18 @@ using PortfolioProject_AkademiQ.Data;
 
 namespace PortfolioProject_AkademiQ.ViewComponents
 {
-    public class _DefaultSkillComponentPartial:ViewComponent
+    public class _DefaultHobbyComponentPartial:ViewComponent
     {
         private readonly AppDbContext _context;
 
-        public _DefaultSkillComponentPartial(AppDbContext context)
+        public _DefaultHobbyComponentPartial(AppDbContext context)
         {
             _context = context;
         }
 
         public IViewComponentResult Invoke()
         {
-            var values = _context.Skills.ToList();
+            var values = _context.Hobbies.ToList();
             return View(values);
         }
     }

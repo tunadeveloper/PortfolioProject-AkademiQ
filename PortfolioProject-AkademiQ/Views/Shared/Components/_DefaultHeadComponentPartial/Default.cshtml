@@ -1,29 +1,121 @@
 ﻿<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Tunahan Cengiz - Portfolyo</title>
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Sility - Material Design Vcard & CV HTML Template</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;700;900&family=Spline+Sans:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-	<!-- Bootstrap -->
-	<link href="/sility/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Material Design Icons -->
-	<link href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css" rel="stylesheet">
-	<!-- Font Awesome -->
-	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<!-- Ionicons -->
-	<link href="/sility/fonts/ionicons/css/ionicons.min.css" rel="stylesheet">
-	<!-- Owl Carousel -->
-	<link href="/sility/css/owl.carousel.css" rel="stylesheet">
-	<link href="/sility/css/owl.theme.default.css" rel="stylesheet">
-	<!-- Style.css -->
-	<link href="/sility/css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#681ff9",
+                        "primary-hover": "#5b13ec",
+                        "secondary": "#00f0ff",
+                        "background-light": "#f6f5f8",
+                        "background-dark": "#160f23",
+                        "surface-dark": "#1f1630",
+                        "text-muted": "#a092c9",
+                        "card-dark": "#231b33",
+                        "surface-border": "#3b3267"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "Spline Sans", "sans-serif"],
+                        "body": ["Inter", "Noto Sans", "sans-serif"]
+                    },
+                    backgroundImage: {
+                         'grid-pattern': 'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)'
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px" },
+                    boxShadow: {
+                        "glow": "0 0 20px rgba(104, 31, 249, 0.3)",
+                        "glow-strong": "0 0 30px rgba(104, 31, 249, 0.5)",
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #160f23;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2f214a;
+            border-radius: 4px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #681ff9;
+            }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @@keyframes subtle-pulse {
+            0% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .animate-subtle-pulse {
+            animation: subtle-pulse 3s infinite ease-in-out;
+        }
+
+        @@keyframes fillBar {
+            from {
+                width: 0%;
+            }
+        }
+
+        .animate-bar {
+            animation: fillBar 1.5s ease-out forwards;
+        }
+
+        .card-3d-container {
+            perspective: 1000px;
+        }
+
+        .card-3d {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+            .card-3d:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 20px 40px -10px rgba(104, 31, 249, 0.3);
+                z-index: 10;
+            }
+    </style>
 </head>

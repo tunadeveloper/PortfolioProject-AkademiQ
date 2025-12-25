@@ -31,10 +31,15 @@ namespace PortfolioProject_AkademiQ.Controllers
 
         public IActionResult DeleteExperience(int id)
         {
-            var values = _context.Experiences.Find(id);
-            _context.Experiences.Remove(values);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Experiences.Find(id);
+                _context.Experiences.Remove(values);
+                _context.SaveChanges();
+                TempData["Delete"] = "Deneyim başarıyla silindi!";
+                return RedirectToAction("Index");
+            }
+           return View();
         }
 
         public IActionResult UpdateExperience(int id)

@@ -22,9 +22,14 @@ namespace PortfolioProject_AkademiQ.Controllers
         [HttpPost]
         public IActionResult UpdateAbout(About about)
         {
-            _context.Abouts.Update(about);
-            _context.SaveChanges();
-            return Redirect("/About/UpdateAbout/1");
+            if (ModelState.IsValid)
+            {
+                _context.Abouts.Update(about);
+                _context.SaveChanges();
+                TempData["Update"] = "Bilgiler başarıyla güncellendi!";
+                return Redirect("/About/UpdateAbout/1");
+            }
+            return View(about);
         }
     }
 }

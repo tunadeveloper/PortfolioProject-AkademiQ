@@ -24,17 +24,27 @@ namespace PortfolioProject_AkademiQ.Controllers
         [HttpPost]
         public IActionResult CreateEducation(Education education)
         {
-            var values = _context.Educations.Add(education);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Educations.Add(education);
+                _context.SaveChanges();
+                TempData["Create"] = "Bilgiler başarıyla eklendi!";
+                return RedirectToAction("Index");
+            }
+          return View(education);
         }
 
         public IActionResult DeleteEducation(int id)
         {
-            var values = _context.Educations.Find(id);
-            _context.Educations.Remove(values);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if(ModelState.IsValid)
+            {
+                var values = _context.Educations.Find(id);
+                _context.Educations.Remove(values);
+                _context.SaveChanges();
+                TempData["Delete"] = "Bilgiler başarıyla silindi!";
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         public IActionResult UpdateEducation(int id)
@@ -46,12 +56,18 @@ namespace PortfolioProject_AkademiQ.Controllers
         [HttpPost]
         public IActionResult UpdateEducation(Education education)
         {
-            var values = _context.Educations.Find(education.EducationId);
-            values.Department = education.Department;
-            values.Title = education.Title;
-            values.EducationDate = education.EducationDate;
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Educations.Find(education.EducationId);
+                values.Department = education.Department;
+                values.Title = education.Title;
+                values.EducationDate = education.EducationDate;
+                _context.SaveChanges();
+                TempData["Update"] = "Bilgiler başarıyla güncellendi!";
+                return RedirectToAction("Index");
+            }
+            return View(education);
+
         }
     }
 }

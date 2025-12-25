@@ -22,13 +22,19 @@ namespace PortfolioProject_AkademiQ.Controllers
         [HttpPost]
         public IActionResult UpdateContact(Contact contact)
         {
-            var values = _context.Contacts.Find(contact.ContactId);
-            values.Address = contact.Address;
-            values.Phone = contact.Phone;
-            values.Email = contact.Email;
-            values.MapLocation = contact.MapLocation;
-            _context.SaveChanges();
-            return Redirect("/Contact/UpdateContact/1");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Contacts.Find(contact.ContactId);
+                values.Address = contact.Address;
+                values.Phone = contact.Phone;
+                values.Email = contact.Email;
+                values.MapLocation = contact.MapLocation;
+                _context.SaveChanges();
+                TempData["Update"] = "Bilgiler başarıyla güncellendi!";
+                return Redirect("/Contact/UpdateContact/1");
+            }
+            return View(contact);
+
         }
     }
 }

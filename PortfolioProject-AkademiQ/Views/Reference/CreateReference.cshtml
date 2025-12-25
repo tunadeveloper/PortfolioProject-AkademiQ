@@ -1,0 +1,177 @@
+﻿@model PortfolioProject_AkademiQ.Entities.Reference
+@{
+    ViewData["Title"] = "Yeni Referans Ekle";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-dark">
+    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent-blue/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <header class="flex items-center justify-between px-8 py-6 z-10 border-b border-white/5 bg-background-dark/80 backdrop-blur-md">
+        <div>
+            <h2 class="text-2xl font-bold text-white tracking-tight">Yeni Referans Ekle</h2>
+            <p class="text-text-muted text-sm mt-1">Müşteri veya iş arkadaşınızdan gelen bir yorumu ekleyin.</p>
+        </div>
+        <a href="/Reference/Index" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all text-sm font-medium border border-white/5">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Listeye Dön
+        </a>
+    </header>
+
+    <div class="flex-1 overflow-y-auto p-8 scroll-smooth relative z-0">
+        <div class="max-w-7xl mx-auto">
+            
+            <form method="post" asp-action="CreateReference" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-card-dark rounded-2xl border border-white/5 p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-accent-purple to-accent-blue opacity-50"></div>
+
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="size-12 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple">
+                                <span class="material-symbols-outlined text-2xl">rate_review</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Referans Bilgileri</h3>
+                                <p class="text-xs text-text-muted">Kişi ve yorum detaylarını giriniz.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="group/input">
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Ad Soyad</label>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-3.5 text-gray-500 group-focus-within/input:text-white transition-colors">person</span>
+                                    <input type="text" name="NameSurname" id="inputName" class="w-full bg-background-darker border border-white/10 text-white text-sm rounded-xl block pl-12 p-3.5 focus:border-accent-purple focus:ring-1 focus:ring-accent-purple outline-none transition-all placeholder:text-gray-600" placeholder="Örn: Ahmet Yılmaz">
+                                </div>
+                               
+                            </div>
+
+                            <div class="group/input">
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Unvan / Şirket</label>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-3.5 text-gray-500 group-focus-within/input:text-white transition-colors">work</span>
+                                    <input type="text" name="Title" id="inputTitle" class="w-full bg-background-darker border border-white/10 text-white text-sm rounded-xl block pl-12 p-3.5 focus:border-accent-blue focus:ring-1 focus:ring-accent-blue outline-none transition-all placeholder:text-gray-600" placeholder="Örn: CEO Tech Corp">
+                                </div>
+                               
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="group/input">
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">LinkedIn Profili</label>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-3.5 text-gray-500 group-focus-within/input:text-[#0077b5] transition-colors">captive_portal</span>
+                                    <input type="text" name="LinkedInUrl" id="inputLinkedin" class="w-full bg-background-darker border border-white/10 text-white text-sm rounded-xl block pl-12 p-3.5 focus:border-[#0077b5] focus:ring-1 focus:ring-[#0077b5] outline-none transition-all placeholder:text-gray-600" placeholder="https://linkedin.com/in/...">
+                                </div>
+                               
+                            </div>
+
+                            <div class="group/input">
+                                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Profil Resmi (URL)</label>
+                                <div class="relative">
+                                    <span class="material-symbols-outlined absolute left-4 top-3.5 text-gray-500 group-focus-within/input:text-accent-purple transition-colors">image</span>
+                                    <input type="text" name="ImageUrl" id="inputImage" class="w-full bg-background-darker border border-white/10 text-white text-sm rounded-xl block pl-12 p-3.5 focus:border-accent-purple focus:ring-1 focus:ring-accent-purple outline-none transition-all placeholder:text-gray-600" placeholder="https://...">
+                                </div>
+                               
+                            </div>
+                        </div>
+
+                        <div class="mb-6 group/input">
+                            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Yorum / Referans Metni</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-3.5 text-gray-500 group-focus-within/input:text-white transition-colors">format_quote</span>
+                                <textarea name="Comment" id="inputComment" rows="4" class="w-full bg-background-darker border border-white/10 text-white text-sm rounded-xl block pl-12 p-3.5 focus:border-accent-blue focus:ring-1 focus:ring-accent-blue outline-none transition-all placeholder:text-gray-600 resize-none" placeholder="Referans yorumunu buraya giriniz..."></textarea>
+                            </div>
+                           
+                        </div>
+
+                        <div class="hidden lg:flex items-center justify-end gap-4 pt-4 border-t border-white/5">
+                            <a href="/Reference/Index" class="px-6 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+                                Vazgeç
+                            </a>
+                            <button type="submit" class="flex items-center gap-2 px-8 py-2.5 rounded-lg bg-gradient-accent hover:opacity-90 text-white font-bold text-sm transition-all shadow-lg shadow-accent-purple/20 active:scale-95">
+                                <span class="material-symbols-outlined text-[18px]">save</span>
+                                Referansı Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-card-dark rounded-2xl border border-white/5 p-6 shadow-lg sticky top-6">
+                        <h3 class="text-sm font-bold text-white mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-accent-blue text-lg">visibility</span>
+                            Kart Önizleme
+                        </h3>
+
+                        <div class="group relative bg-card-dark rounded-2xl border border-white/10 p-6 flex flex-col shadow-2xl">
+                            
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="relative size-12 rounded-full p-[2px] bg-gradient-to-br from-white/10 to-transparent">
+                                        <img id="prevImg" src="" class="size-full rounded-full object-cover hidden" />
+                                        <div id="prevPlaceholder" class="size-full rounded-full bg-white/10 flex items-center justify-center text-gray-500 font-bold">?</div>
+                                    </div>
+                                    
+                                    <div class="overflow-hidden">
+                                        <h3 id="prevName" class="text-base font-bold text-white leading-tight truncate">Ad Soyad</h3>
+                                        <p id="prevTitle" class="text-xs text-accent-blue font-medium mt-0.5 truncate">Unvan</p>
+                                    </div>
+                                </div>
+
+                                <div id="prevLinkedinBox" class="opacity-30">
+                                    <div class="size-8 rounded-lg bg-[#0077b5]/10 text-[#0077b5] flex items-center justify-center border border-[#0077b5]/20">
+                                        <span class="material-symbols-outlined text-[18px]">captive_portal</span> 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="relative flex-1 bg-white/[0.02] rounded-xl p-4 mb-2 border border-white/5">
+                                <span class="material-symbols-outlined absolute top-2 right-2 text-4xl text-white/[0.03] select-none pointer-events-none">format_quote</span>
+                                <p id="prevComment" class="text-sm text-gray-400 italic leading-relaxed break-words relative z-10 min-h-[80px]">
+                                    Yorum metni burada görünecek...
+                                </p>
+                            </div>
+
+                        </div>
+                        
+                        <p class="text-[10px] text-gray-500 mt-4 text-center">
+                            * Bu önizleme, referansın sitede nasıl görüneceğini simüle eder.
+                        </p>
+
+                        <button type="submit" class="w-full lg:hidden mt-6 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-accent hover:opacity-90 text-white font-bold text-sm transition-all shadow-lg active:scale-95">
+                            <span class="material-symbols-outlined">save</span>
+                            Kaydet
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>
+
+<script>
+    inputs.image.addEventListener('input', (e) => {
+        const url = e.target.value.trim();
+        if(url) {
+            previews.img.src = url;
+            previews.img.classList.remove('hidden');
+            previews.placeholder.classList.add('hidden');
+            
+            previews.img.onerror = function() {
+                previews.img.classList.add('hidden');
+                previews.placeholder.classList.remove('hidden');
+                previews.placeholder.textContent = inputs.name.value ? inputs.name.value.charAt(0).toUpperCase() : "?";
+            };
+        } else {
+            previews.img.classList.add('hidden');
+            previews.placeholder.classList.remove('hidden');
+            previews.placeholder.textContent = inputs.name.value ? inputs.name.value.charAt(0).toUpperCase() : "?";
+        }
+    });
+    
+    function updateText(val, element, defaultText) {
+        element.textContent = val.trim() ? val : defaultText;
+    }
+</script>

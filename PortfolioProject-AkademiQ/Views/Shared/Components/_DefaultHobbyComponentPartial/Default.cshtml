@@ -1,0 +1,44 @@
+﻿@model List<Hobby>
+
+<section id="hobbies" class="py-20 px-4 md:px-12 bg-[#120d1d]">
+
+    <div class="max-w-6xl mx-auto text-center mb-12">
+        <h2 class="text-white tracking-tight text-4xl font-bold leading-tight mb-4">
+            Kodun <span class="text-primary">Ötesinde</span>
+        </h2>
+        <p class="text-white/70 text-lg max-w-2xl mx-auto">
+            Kod yazmanın ötesinde beni motive eden ve yaratıcılığımı besleyen ilgi alanlarım.
+        </p>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+
+        @foreach (var item in Model)
+        {
+            <div class="group flex flex-col gap-4 rounded-xl border border-white/5 bg-[#1e1933] p-6 hover:border-primary/50 hover:shadow-glow-strong transition-all cursor-default">
+
+                @if (!string.IsNullOrEmpty(item.IconUrl))
+                {
+                    @if (!item.IconUrl.Contains("."))
+                    {
+                        <span class="material-symbols-outlined text-[32px] text-primary">@item.IconUrl</span>
+                    }
+                    else
+                    {
+                        <img src="@item.IconUrl" class="w-10 h-10 object-contain" />
+                    }
+                }
+                else
+                {
+                    <span class="material-symbols-outlined text-[32px] text-primary">star</span>
+                }
+
+                <h3 class="text-white text-xl font-bold">@item.Title</h3>
+
+            </div>
+        }
+
+    </div>
+
+</section>

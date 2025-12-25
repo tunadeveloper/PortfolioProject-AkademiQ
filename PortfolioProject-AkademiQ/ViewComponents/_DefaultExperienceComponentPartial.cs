@@ -15,7 +15,7 @@ namespace PortfolioProject_AkademiQ.ViewComponents
         public IViewComponentResult Invoke()
         {
 
-            var values = _context.Experiences.ToList();
+            var values = _context.Experiences.OrderByDescending(x=>x.ExperienceId).ToList();
             return View(values);
         }
         }

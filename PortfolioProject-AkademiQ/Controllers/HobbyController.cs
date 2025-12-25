@@ -21,10 +21,15 @@ namespace PortfolioProject_AkademiQ.Controllers
 
         public IActionResult DeleteHobby(int id)
         {
-            var hobby = _context.Hobbies.Find(id);
-            _context.Hobbies.Remove(hobby);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Hobbies.Find(id);
+                _context.Hobbies.Remove(values);
+                _context.SaveChanges();
+                TempData["Delete"] = "Hobi başarıyla silindi!";
+                return RedirectToAction("Index");
+            }
+            return View();
         }
 
         public IActionResult CreateHobby() => View();

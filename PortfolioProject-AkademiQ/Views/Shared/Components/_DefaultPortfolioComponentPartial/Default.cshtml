@@ -1,119 +1,65 @@
-﻿<section id="section6">
-	<div class="container">
-		<h2>Portfolio</h2>
-		<div class="portfolio-wrapper">
-			<div id="portfolio-filters" class="portfolio-filters">
-				<button class="button solid-button white-purple small" data-filter="*">Show All</button>
-				<button class="button solid-button white-purple small" data-filter=".branding">Branding</button>
-				<button class="button solid-button white-purple small" data-filter=".print">Print</button>
-				<button class="button solid-button white-purple small" data-filter=".motion">Motion</button>
-				<button class="button solid-button white-purple small" data-filter=".websites">Websites</button>
-			</div>
-			<div id="portfolio" class="portfolio">
-				<div class="item branding print">
-					<img src="images/portfolio01.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 01</span>
-							<span class="category">Branding, Print</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item motion">
-					<img src="images/portfolio02.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 02</span>
-							<span class="category">Motion</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item print">
-					<img src="images/portfolio03.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 03</span>
-							<span class="category">Print</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item print branding websites">
-					<img src="images/portfolio04.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 04</span>
-							<span class="category">Branding, Websites</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item print branding">
-					<img src="images/portfolio05.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 05</span>
-							<span class="category">Print, Branding</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item motion">
-					<img src="images/portfolio06.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 06</span>
-							<span class="category">Motion</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item motion">
-					<img src="images/portfolio07.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 07</span>
-							<span class="category">Motion</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item print">
-					<img src="images/portfolio08.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 08</span>
-							<span class="category">Print</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item motion">
-					<img src="images/portfolio09.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 09</span>
-							<span class="category">Motion</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-				<div class="item websites">
-					<img src="images/portfolio10.jpg" alt="alt text" class="img-responsive">
-					<a href="single-portfolio.html" class="overlay">
-						<div class="background"></div>
-						<div class="meta">
-							<span class="title">Portfolio Item - 10</span>
-							<span class="category">Websites</span>
-						</div> <!-- end .meta -->
-					</a> <!-- end .overlay -->
-				</div> <!-- end .item -->
-			</div> <!-- end .portfolio -->
-			<div class="portfolio-load-more">
-				<a href="single-portfolio.html" class="button solid-button white icon-right">Load More Work<i class="md-refresh"></i></a>
-			</div> <!-- end .portfolio-load-more -->
-		</div> <!-- end .portfolio-wrapper -->
-	</div> <!-- end .container -->
-</section> <!-- end #section1 -->
+﻿@model List<Work>
+
+<section id="work" class="w-full max-w-[1200px] mx-auto px-4 md:px-8 py-12 md:py-20 flex flex-col gap-10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div class="max-w-2xl">
+            <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tight mb-4 text-white">
+                Son <span class="text-primary">Çalışmalarım</span>
+            </h2>
+            <p class="text-gray-400 text-lg max-w-lg leading-relaxed">
+                Temiz kod yazımını kusursuz tasarımla birleştiren projelerden oluşan özenle seçilmiş bir galeri.
+            </p>
+        </div>
+        <div class="hidden md:block w-32 h-1 bg-gradient-to-r from-primary to-transparent rounded-full mb-4"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-max">
+
+        @if (Model != null && Model.Any())
+        {
+            var featured = Model.First();
+
+            <div class="group card-3d-container md:col-span-2 lg:col-span-2 row-span-2 cursor-pointer">
+                <div class="card-3d relative h-full min-h-[400px] rounded-2xl overflow-hidden bg-surface-dark border border-white/5">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                         style="background-image: url('@featured.ImageUrl');"></div>
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col justify-end">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary bg-primary/20 backdrop-blur-md rounded-full border border-primary/30">
+                                Öne Çıkan
+                            </span>
+                            <span class="text-xs font-medium text-gray-300 tracking-wide uppercase">
+                                @featured.SubTitle
+                            </span>
+                        </div>
+
+                        <h3 class="text-3xl font-bold text-white mb-2 group-hover:text-primary-hover transition-colors">
+                            @featured.Title
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        }
+        @foreach (var item in Model.Skip(1).Take(2))
+        {
+            <div class="group card-3d-container cursor-pointer">
+                <div class="card-3d relative h-[320px] rounded-2xl overflow-hidden bg-surface-dark border border-white/5">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                         style="background-image: url('@item.ImageUrl');"></div>
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+
+                    <div class="absolute bottom-0 left-0 w-full p-6 flex flex-col justify-end transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                        <h3 class="text-xl font-bold text-white mb-1">@item.Title</h3>
+                        <p class="text-primary-hover text-sm font-medium">@item.SubTitle</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</section>

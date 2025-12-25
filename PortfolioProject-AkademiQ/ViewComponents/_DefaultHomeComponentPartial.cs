@@ -2,7 +2,7 @@
 
 namespace PortfolioProject_AkademiQ.ViewComponents
 {
-    public class _DefaultRightAreaComponentPartial : ViewComponent
+    public class _DefaultHomeComponentPartial : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

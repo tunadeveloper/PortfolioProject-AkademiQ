@@ -30,11 +30,17 @@ namespace PortfolioProject_AkademiQ.Controllers
         }
         public IActionResult DeleteSkill(int id)
         {
-            var values = _context.Skills.Find(id);
-            _context.Skills.Remove(values);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var values = _context.Skills.Find(id);
+                _context.Skills.Remove(values);
+                _context.SaveChanges();
+                TempData["Delete"] = "Yetenek başarıyla silindi!";
+                return RedirectToAction("Index");
+            }
+            return View();
         }
+        
 
         public IActionResult UpdateSkill(int id)
         {
