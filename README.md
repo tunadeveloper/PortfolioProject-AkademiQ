@@ -1,8 +1,6 @@
 # 🚀 ASP.NET Core Portfolio Project
 
-Bu proje, **ASP.NET Core** kullanılarak geliştirilmiş bir portfolyo uygulamasıdır. CRUD işlemleri, kullanıcı etkileşimleri ve modern web geliştirme yaklaşımları içeren projedir.  
-**Microsoft SQL Server** veritabanı kullanarak ve **Database-First (Db First)** yaklaşımı uyguladım. Kod yapısında temizliği sağlamak için **ViewComponent** yapıları tercih ettim.  
-Kullanıcı deneyimini artırmak için **SweetAlert** ile etkileşimli bildirimler ekledim. 🎨
+Bu proje, **ASP.NET Core** kullanılarak geliştirilmiş bir portfolyo uygulamasıdır. CRUD işlemleri, kullanıcı etkileşimleri ve modern web geliştirme yaklaşımları içeren projedir. **Microsoft SQL Server** veritabanı kullanarak ve **Database-First (Db First)** yaklaşımı uyguladım. Kod yapısında temizliği sağlamak için **ViewComponent** yapıları tercih ettim. Kullanıcı deneyimini artırmak için **SweetAlert** ile etkileşimli bildirimler ekledim. 🎨
 
 ---
 
